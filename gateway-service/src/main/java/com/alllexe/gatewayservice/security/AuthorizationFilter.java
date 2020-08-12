@@ -34,11 +34,12 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
         String authorizationHeader = request.getHeader(environment.getProperty("authorization.token.header.name"));
         if (authorizationHeader == null || !authorizationHeader.startsWith(environment.getProperty("authorization.token.header.prefix"))) {
             chain.doFilter(request, response);
-        }
+        } else {
 
-        UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        chain.doFilter(request, response);
+            UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            chain.doFilter(request, response);
+        }
 
     }
 
